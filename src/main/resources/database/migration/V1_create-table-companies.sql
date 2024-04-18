@@ -1,0 +1,7 @@
+CREATE TABLE companies (
+    id VARCHAR(50) PRIMARY KEY NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    cnpj VARCHAR(18) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
