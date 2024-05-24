@@ -1,8 +1,9 @@
 package com.uj.billswift.company;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-// import com.uj.billswift.company.Company;
+import java.util.Optional;
 
-public interface CompanyRepository extends JpaRepository<Company, String>{
-    
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CompanyRepository extends JpaRepository<Company, String> {
+    Optional<Company> findByEmail(String email);
 }
