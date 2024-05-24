@@ -1,22 +1,25 @@
 package com.uj.billswift.company;
 
 import jakarta.persistence.*;
+import lombok.Setter;
+import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
-// @Table(name = "companies")
+@Table(name = "companies")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class Company {
-    // definir informações sobre a empresa, como nome, cnpj, email, senha etc
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    // definir getters e setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private String name;
+    private String email;
+    private String cnpj;
+    private String password;
 }
