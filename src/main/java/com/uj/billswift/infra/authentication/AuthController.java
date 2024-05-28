@@ -1,9 +1,13 @@
 package com.uj.billswift.infra.authentication;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +24,19 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/billswift")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
 public class AuthController {
     private final CompanyRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
+
+    // Função auxiliar para criar o corpo da resposta JSON
+    private ResponseEntity<Map<String, String>> createErrorResponse(String message, Integer status) {
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", message);
+        return ResponseEntity.status(status).body(responseBody);
+    }
 
     @PostMapping("/login") 
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO body) {
@@ -47,9 +59,13 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDTO body) {
         Optional<Company> companyCheckEmail = this.repository.findByEmail(body.email());
-
         if(companyCheckEmail.isPresent()) {
-            return ResponseEntity.status(400).body("Email already registered");
+            return createErrorResponse("Email já registrado.", 400);
+        }
+        
+        Optional<Company> companyCheckCnpj = this.repository.findByCnpj(body.cnpj());
+        if(companyCheckCnpj.isPresent()) {
+            return createErrorResponse("Um usuário com o CNPJ já está registrado.", 400);
         }
 
             Company newCompany = new Company();
