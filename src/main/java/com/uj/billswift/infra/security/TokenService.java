@@ -25,6 +25,9 @@ public class TokenService {
             String token = JWT.create()
                 .withIssuer("billswift")
                 .withSubject(company.getEmail())
+                .withClaim("name", company.getName())
+                .withClaim("stateRegistration", company.getStateRegistration())
+                .withClaim("cnpj", company.getCnpj())
                 .withExpiresAt(this.generateExpirationDate())
                 .sign(algorithm);
 

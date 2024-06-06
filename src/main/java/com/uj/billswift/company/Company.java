@@ -22,4 +22,5 @@ public class Company {
     private String email;
     private String cnpj;
     private String password;
+    private String stateRegistration;
 }
