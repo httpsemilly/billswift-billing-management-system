@@ -1,0 +1,22 @@
+CREATE TABLE invoices (
+    id VARCHAR(50) PRIMARY KEY NOT NULL,
+    transaction_nature VARCHAR(255) NOT NULL,
+    issue_date DATE NOT NULL,
+    entry_exit_date DATE NOT NULL,
+    series INT NOT NULL,
+    invoice_number INT NOT NULL,
+    purpose INT NOT NULL,
+    document_type INT NOT NULL,
+    product_description VARCHAR(255) NOT NULL,
+    product_code VARCHAR(255) NOT NULL,
+    price FLOAT NOT NULL,
+    shipping FLOAT NOT NULL,
+    discount FLOAT NOT NULL,
+    amount INT NOT NULL,
+    emitter_id VARCHAR(50) NOT NULL,
+    recipient_id INT NOT NULL,
+    pdf_path VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (emitter_id) REFERENCES companies(id),
+    FOREIGN KEY (recipient_id) REFERENCES clients(id)
+);
