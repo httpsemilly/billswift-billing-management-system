@@ -27,4 +27,8 @@ public class CompanyService {
 
         return company;
     }
+
+    public Company getCompanyById(String id) {
+        return companyRepository.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+    }
 }
