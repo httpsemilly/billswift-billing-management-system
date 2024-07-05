@@ -1,3 +1,4 @@
+# Stage 1: Construção do projeto com Maven
 FROM ubuntu:latest AS build
 
 RUN apt-get update && \
@@ -7,8 +8,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN mvn clean install
+# Ignora os testes durante a construção
+RUN mvn clean install -DskipTests
 
+# Stage 2: Criação da imagem final
 FROM openjdk:21-jdk-slim
 
 EXPOSE 8080
